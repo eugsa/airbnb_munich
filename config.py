@@ -1,3 +1,6 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
 # Source files
 DATASET_PATH = '../data/'
 FILENAME = 'listings.csv'
