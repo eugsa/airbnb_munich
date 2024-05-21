@@ -1,9 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import inspect
+import os
 
 # Source files
 DATASET_PATH = '../data/'
-FILENAME = 'listings.csv'
+LISTING_FILENAME = 'listings.csv'
 
 # Data cleaning
 COLUMNS_DROP_NA = ['host_name']
@@ -21,3 +23,6 @@ COLUMNS_RENAME = {
   'neighborhood_overview': 'neighborhood_description',
   'neighbourhood_cleansed': 'neighborhood_name'
 }
+
+# Output files
+FIGURES_PATH = './figures/'

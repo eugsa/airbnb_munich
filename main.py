@@ -3,7 +3,7 @@ from transform import *
 from visualization import *
 
 def init():
-  listings_df = pd.read_csv(DATASET_PATH + FILENAME)
+  listings_df = pd.read_csv(DATASET_PATH + LISTING_FILENAME)
   transform_listings(listings_df)
   clean_df = get_cleaned_df(listings_df)
   return clean_df
