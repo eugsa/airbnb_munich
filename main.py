@@ -1,19 +1,19 @@
 import pandas as pd
-
-dataset_path = '../data/'
-filename = 'listings.csv'
+from config import *
 
 def transform_listings(df):
-  columns_drop_na = ['host_name']
-  columns_drop = ['neighbourhood', 'neighbourhood_group_cleansed', 'host_neighbourhood']
-  columns_rename = {
-  'neighborhood_overview': 'neighborhood_description',
-  'neighbourhood_cleansed': 'neighborhood_name'
-  }
+  df.dropna(subset=COLUMNS_DROP_NA, inplace=True)
+  df.drop(columns=COLUMNS_DROP, inplace=True)
+  df.rename(columns=COLUMNS_RENAME, inplace=True)
 
-  df.dropna(subset=columns_drop_na, inplace=True)
-  df.drop(columns=columns_drop, inplace=True)
-  df.rename(columns=columns_rename, inplace=True)
+def get_cleaned_df(df):
+  clean_df = df[['id', 'host_id', 'neighborhood_name']]
+  return clean_df
 
-listings_df = pd.read_csv(dataset_path + filename)
+listings_df = pd.read_csv(DATASET_PATH + FILENAME)
 transform_listings(listings_df)
+clean_df = get_cleaned_df(listings_df)
+
+# Manual check
+print(clean_df.columns)
+print(clean_df.sample(n=10))
