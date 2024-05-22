@@ -3,3 +3,6 @@ clean:
 
 generate_listing_count_per_neighborhood_plot:
 	python -c "from main import generate_listing_count_per_neighborhood_plot; generate_listing_count_per_neighborhood_plot()"
+
+generate_host_count_per_listing_amount_plot:
+	python -c "from main import generate_host_count_per_listing_amount_plot; generate_host_count_per_listing_amount_plot()"

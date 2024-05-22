@@ -10,5 +10,8 @@ def init():
 
 def generate_listing_count_per_neighborhood_plot():
   clean_df = init()
-  print(clean_df.sample(n=5))
   listing_count_per_neighborhood_plot(clean_df)
+
+def generate_host_count_per_listing_amount_plot():
+  clean_df = init()
+  host_count_per_listing_amount_plot(clean_df)

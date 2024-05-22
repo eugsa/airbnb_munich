@@ -24,3 +24,17 @@ def listing_count_per_neighborhood_plot(df):
 
   filename = inspect.stack()[0][3]
   saving_figure(plt, filename)
+
+def host_count_per_listing_amount_plot(df):
+  listing_count_per_host_df = df.groupby(by='host_id').agg({'id': 'count'}).rename(columns={'id': 'listing_count'}).reset_index()
+  host_count_per_listing_amount_df = listing_count_per_host_df.groupby(by='listing_count').agg({'host_id': 'count'}).rename(columns={'host_id': 'host_count'}).reset_index()
+  host_count_per_listing_amount_df = host_count_per_listing_amount_df.sort_values(by='listing_count', ascending=False)
+
+  plt.bar(host_count_per_listing_amount_df.listing_count, host_count_per_listing_amount_df.host_count)
+  plt.yscale('log')
+  plt.title('Host count per listing amount')
+  plt.xlabel('Amount of listings')
+  plt.ylabel('Number of hosts')
+  plt.show()
+
+
