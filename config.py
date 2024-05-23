@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import inspect
 import os
+import re
 
 # Source files
 DATASET_PATH = '../data/'
@@ -17,7 +18,10 @@ COLUMNS_DROP = [
   'scrape_id',
   'last_scraped',
   'source',
-  'picture_url'
+  'picture_url',
+  'bathrooms',
+  'bedrooms',
+  'bathrooms_text'
 ]
 COLUMNS_RENAME = {
   'neighborhood_overview': 'neighborhood_description',

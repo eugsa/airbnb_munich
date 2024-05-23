@@ -39,4 +39,5 @@ def host_count_per_listing_amount_plot(df):
   filename = inspect.stack()[0][3]
   saving_figure(plt, filename)
 
-
+def bedroom_count_per_price_plot(df):
+   df
