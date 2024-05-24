@@ -67,3 +67,10 @@ def get_host_count_per_listing_amount_df(df):
 def drop_price_na(df):
   df.dropna(subset=['price'], inplace=True)
   return df
+
+def get_price_range(df):
+  bins = [0, 50, 100, 150, 200, 250, 300, 350, 400, np.inf]
+  names = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400+']
+  df['price_range'] = pd.cut(df.price, bins, labels=names)
+  df.price_range.value_counts(sort=False).plot(kind='bar')
+  return df

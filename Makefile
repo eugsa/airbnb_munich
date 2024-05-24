@@ -15,3 +15,6 @@ generate_bedroom_count_per_price_plot:
 
 generate_price_plot:
 	python -c "from main import generate_price_plot; generate_price_plot()"
+
+generate_price_per_neigborhood_plot:
+	python -c "from main import generate_price_per_neigborhood_plot; generate_price_per_neigborhood_plot()"

@@ -9,7 +9,7 @@ def get_filepath(filename):
 def saving_figure(plt, filename):
     filepath = get_filepath(filename)
     plt.savefig(filepath)
-    print(f"See saved figure as { filepath }.")
+    print(f"See saved figure as { filepath }.png")
     plt.close()
 
 def listing_count_per_neighborhood_plot(df):
@@ -56,11 +56,8 @@ def bedroom_count_per_price_plot(df):
 
 def price_plot(df):
   df = drop_price_na(df)
+  df = get_price_range_column
 
-  bins = [0, 50, 100, 150, 200, 250, 300, 350, 400, np.inf]
-  names = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400+']
-  df['price_range'] = pd.cut(df.price, bins, labels=names)
-  df.price_range.value_counts(sort=False).plot(kind='bar')
   plt.xticks(rotation=45)
   plt.subplots_adjust(bottom=0.2)
   plt.title('Price categories plot')
@@ -69,3 +66,27 @@ def price_plot(df):
 
   filename = inspect.stack()[0][3]
   saving_figure(plt, filename)
+
+def calculate_percentage(row, df):
+  total_count = df[df['neighborhood_name'] == row['neighborhood_name']].shape[0]
+  range_count = df[(df['neighborhood_name'] == row['neighborhood_name']) & (df['price_range'] == row['price_range'])].shape[0]
+  return (range_count / total_count) * 100
+  
+def price_per_neigborhood_plot(df):
+  df = drop_price_na(df)
+  df = get_price_range(df)
+
+  grouped = df.groupby(['neighborhood_name', 'price_range']).size().unstack(fill_value=0)
+  percentage_df = grouped.div(grouped.sum(axis=1), axis=0) * 100
+  percentage_df.plot(kind='barh', stacked=True)
+  plt.title('Price per neighborhood plot')
+  plt.xlabel('Percentage of prices')
+  plt.ylabel('Neighborhoods')
+  plt.subplots_adjust(left=0.4)
+
+  filename = inspect.stack()[0][3]
+  saving_figure(plt, filename)
+
+  
+
+  
