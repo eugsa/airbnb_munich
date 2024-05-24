@@ -47,4 +47,9 @@ def bedroom_count_per_price_plot(df):
     bedroom_count_per_price_df.bedroom_count
   )
   plt.xscale('log')
-  plt.show()
+  plt.title('Bedroom count per price plot')
+  plt.xlabel('Bedroom count')
+  plt.ylabel('Price')
+
+  filename = inspect.stack()[0][3]
+  saving_figure(plt, filename)
