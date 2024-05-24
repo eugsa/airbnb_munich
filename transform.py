@@ -64,6 +64,6 @@ def get_host_count_per_listing_amount_df(df):
   host_count_per_listing_amount_df = host_count_per_listing_amount_df.sort_values(by='listing_count', ascending=False)
   return host_count_per_listing_amount_df
 
-def get_bedroom_count_per_price_df(df):
+def drop_price_na(df):
   df.dropna(subset=['price'], inplace=True)
   return df

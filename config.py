@@ -4,6 +4,7 @@ import inspect
 import os
 import re
 import math
+import numpy as np
 
 # Source files
 DATASET_PATH = '../data/'

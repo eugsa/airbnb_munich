@@ -40,7 +40,7 @@ def host_count_per_listing_amount_plot(df):
   saving_figure(plt, filename)
 
 def bedroom_count_per_price_plot(df):
-  bedroom_count_per_price_df = get_bedroom_count_per_price_df(df)
+  bedroom_count_per_price_df = drop_price_na(df)
 
   plt.scatter(
     bedroom_count_per_price_df.price,
@@ -50,6 +50,24 @@ def bedroom_count_per_price_plot(df):
   plt.title('Bedroom count per price plot')
   plt.xlabel('Bedroom count')
   plt.ylabel('Price')
+
+  filename = inspect.stack()[0][3]
+  saving_figure(plt, filename)
+
+def price_plot(df):
+  df = drop_price_na(df)
+  print(df.price.agg(['min', 'max']))
+  print(df.price.sample(n=20))
+
+  bins = [0, 50, 100, 150, 200, 250, 300, 350, 400, np.inf]
+  names = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400+']
+  df['price_range'] = pd.cut(df.price, bins, labels=names)
+  df.price_range.value_counts(sort=False).plot(kind='bar')
+  plt.xticks(rotation=45)
+  plt.subplots_adjust(bottom=0.2)
+  plt.title('Price categories plot')
+  plt.xlabel('Bins')
+  plt.ylabel('Amount')
 
   filename = inspect.stack()[0][3]
   saving_figure(plt, filename)

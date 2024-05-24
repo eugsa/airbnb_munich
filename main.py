@@ -19,3 +19,7 @@ def generate_host_count_per_listing_amount_plot():
 def generate_bedroom_count_per_price_plot():
   clean_df = init()
   bedroom_count_per_price_plot(clean_df)
+
+def generate_price_plot():
+  clean_df = init()
+  price_plot(clean_df)
