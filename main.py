@@ -8,8 +8,15 @@ def init():
   clean_df = get_cleaned_df(listings_df)
   return clean_df
 
-def generate_listing_count_per_neighborhood_plot():
+def generate_all_plots():
   clean_df = init()
+  listing_count_per_neighborhood_plot(clean_df)
+  host_count_per_listing_amount_plot(clean_df)
+  bedroom_count_per_price_plot(clean_df)
+  price_plot(clean_df)
+
+def generate_listing_count_per_neighborhood_plot():
+  
   listing_count_per_neighborhood_plot(clean_df)
 
 def generate_host_count_per_listing_amount_plot():

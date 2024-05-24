@@ -56,8 +56,6 @@ def bedroom_count_per_price_plot(df):
 
 def price_plot(df):
   df = drop_price_na(df)
-  print(df.price.agg(['min', 'max']))
-  print(df.price.sample(n=20))
 
   bins = [0, 50, 100, 150, 200, 250, 300, 350, 400, np.inf]
   names = ['0-50', '50-100', '100-150', '150-200', '200-250', '250-300', '300-350', '350-400', '400+']
