@@ -56,7 +56,7 @@ def bedroom_count_per_price_plot(df):
 
 def price_plot(df):
   df = drop_price_na(df)
-  df = get_price_range_column
+  df = get_price_range(df)
 
   plt.xticks(rotation=45)
   plt.subplots_adjust(bottom=0.2)
@@ -76,7 +76,7 @@ def price_per_neigborhood_plot(df):
   df = drop_price_na(df)
   df = get_price_range(df)
 
-  grouped = df.groupby(['neighborhood_name', 'price_range']).size().unstack(fill_value=0)
+  grouped = df.groupby(['neighborhood_name', 'price_range'], observed=True).size().unstack(fill_value=0)
   percentage_df = grouped.div(grouped.sum(axis=1), axis=0) * 100
   percentage_df.plot(kind='barh', stacked=True)
   plt.title('Price per neighborhood plot')
