@@ -40,4 +40,11 @@ def host_count_per_listing_amount_plot(df):
   saving_figure(plt, filename)
 
 def bedroom_count_per_price_plot(df):
-   df
+  bedroom_count_per_price_df = get_bedroom_count_per_price_df(df)
+
+  plt.scatter(
+    bedroom_count_per_price_df.price,
+    bedroom_count_per_price_df.bedroom_count
+  )
+  plt.xscale('log')
+  plt.show()

@@ -32,8 +32,15 @@ def extract_data_from_name(df):
   df.fillna({'bed_count': 1}, inplace=True)
   return df
 
+def get_price_clean(text):
+  if type(text) == float and math.isnan(text):
+    return text 
+  text = text.replace(',', '')
+  return float(text.split('$')[1])
+
 def transform_listings(df):
   df = extract_data_from_name(df)
+  df['price'] = df.price.apply(get_price_clean)
   df.dropna(subset=COLUMNS_DROP_NA, inplace=True)
   df.drop(columns=COLUMNS_DROP, inplace=True)
   df.rename(columns=COLUMNS_RENAME, inplace=True)
@@ -41,7 +48,8 @@ def transform_listings(df):
 def get_cleaned_df(df):
   columns = [
     'id', 'host_id', 'neighborhood_name',
-    'bathroom_count', 'bedroom_count', 'bed_count'
+    'bathroom_count', 'bedroom_count', 'bed_count',
+    'price'
   ]
   clean_df = df[columns]
   return clean_df
@@ -55,3 +63,7 @@ def get_host_count_per_listing_amount_df(df):
   host_count_per_listing_amount_df = listing_count_per_host_df.groupby(by='listing_count').agg({'host_id': 'count'}).rename(columns={'host_id': 'host_count'}).reset_index()
   host_count_per_listing_amount_df = host_count_per_listing_amount_df.sort_values(by='listing_count', ascending=False)
   return host_count_per_listing_amount_df
+
+def get_bedroom_count_per_price_df(df):
+  df.dropna(subset=['price'], inplace=True)
+  return df

@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import inspect
 import os
 import re
+import math
 
 # Source files
 DATASET_PATH = '../data/'
