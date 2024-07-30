@@ -8,7 +8,16 @@ import config
 def get_bathroom_count(bathroom_text):
     if isinstance(bathroom_text, float):
         return 0.0
-    elif (len(bathroom_text.split(' ')) == 1 and bathroom_text.split(' ')[0].lower() == 'half-bath') or (len(bathroom_text.split(' ')) > 1 and bathroom_text.split(' ')[1].lower() == 'half-bath'):
+    elif (
+            (
+                len(bathroom_text.split(' ')) == 1 and
+                bathroom_text.split(' ')[0].lower() == 'half-bath'
+            ) or
+            (
+                len(bathroom_text.split(' ')) > 1 and
+                bathroom_text.split(' ')[1].lower() == 'half-bath'
+            )
+        ):
         return 0.5
     return float(bathroom_text.split(' ')[0])
 
@@ -57,12 +66,18 @@ def get_cleaned_df(df):
     return clean_df
 
 def get_listing_count_per_neighborhood_df(df):
-    clean_df = df.groupby(by='neighborhood_name').agg({'id': 'count'}).rename(columns={'id': 'listing_count'}).reset_index()
+    clean_df = df.groupby(by='neighborhood_name').agg({'id': 'count'})
+    clean_df = clean_df.rename(columns={'id': 'listing_count'}).reset_index()
     return clean_df
 
 def get_host_count_per_listing_amount_df(df):
-    listing_count_per_host_df = df.groupby(by='host_id').agg({'id': 'count'}).rename(columns={'id': 'listing_count'}).reset_index()
-    host_count_per_listing_amount_df = listing_count_per_host_df.groupby(by='listing_count').agg({'host_id': 'count'}).rename(columns={'host_id': 'host_count'}).reset_index()
+    listing_count_per_host_df = df.groupby(by='host_id').agg({'id': 'count'})
+    listing_count_per_host_df = listing_count_per_host_df.rename(columns={'id': 'listing_count'})
+    listing_count_per_host_df = listing_count_per_host_df.reset_index()
+    host_count_per_listing_amount_df = listing_count_per_host_df.groupby(by='listing_count')
+    host_count_per_listing_amount_df = host_count_per_listing_amount_df.agg({'host_id': 'count'})
+    host_count_per_listing_amount_df = host_count_per_listing_amount_df.rename(columns={'host_id': 'host_count'})
+    host_count_per_listing_amount_df = host_count_per_listing_amount_df.reset_index()
     host_count_per_listing_amount_df = host_count_per_listing_amount_df.sort_values(by='listing_count', ascending=False)
     return host_count_per_listing_amount_df
 
