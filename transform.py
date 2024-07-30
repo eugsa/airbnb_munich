@@ -1,5 +1,9 @@
-from config import *
+"""Methods transforming and cleaning the data"""
+import re
+import math
 import pandas as pd
+import numpy as np
+import config
 
 def get_bathroom_count(bathroom_text):
     if isinstance(bathroom_text, float):
@@ -31,7 +35,7 @@ def extract_data_from_name(df):
     return df
 
 def get_price_clean(text):
-    if type(text) == float and math.isnan(text):
+    if isinstance(text, float) and math.isnan(text):
         return text 
     text = text.replace(',', '')
     return float(text.split('$')[1])
@@ -39,9 +43,9 @@ def get_price_clean(text):
 def transform_listings(df):
     df = extract_data_from_name(df)
     df['price'] = df.price.apply(get_price_clean)
-    df.dropna(subset=COLUMNS_DROP_NA, inplace=True)
-    df.drop(columns=COLUMNS_DROP, inplace=True)
-    df.rename(columns=COLUMNS_RENAME, inplace=True)
+    df.dropna(subset=config.COLUMNS_DROP_NA, inplace=True)
+    df.drop(columns=config.COLUMNS_DROP, inplace=True)
+    df.rename(columns=config.COLUMNS_RENAME, inplace=True)
 
 def get_cleaned_df(df):
     columns = [

@@ -1,11 +1,4 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import inspect
-import os
-import re
-import math
-import numpy as np
-
+"""Constants."""
 # Source files
 DATASET_PATH = '../data/'
 LISTING_FILENAME = 'listings.csv'

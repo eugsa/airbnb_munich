@@ -1,9 +1,13 @@
-from config import *
-from transform import *
+"""Methods creating visualizations of the data from df"""
+import inspect
+import os
+import config
+import matplotlib.pyplot as plt
+import transform
 
 def get_filepath(filename):
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    filepath = os.path.join(script_dir, FIGURES_PATH + filename)
+    filepath = os.path.join(script_dir, config.FIGURES_PATH + filename)
     return filepath
 
 def saving_figure(plt, filename):
@@ -13,7 +17,7 @@ def saving_figure(plt, filename):
     plt.close()
 
 def listing_count_per_neighborhood_plot(df):
-    listing_count_per_neighborhood_df = get_listing_count_per_neighborhood_df(df)
+    listing_count_per_neighborhood_df = transform.get_listing_count_per_neighborhood_df(df)
 
     plt.figure(figsize=(12, 6))
     plt.bar(listing_count_per_neighborhood_df.neighborhood_name, listing_count_per_neighborhood_df.listing_count, zorder=2)
@@ -28,7 +32,7 @@ def listing_count_per_neighborhood_plot(df):
     saving_figure(plt, filename)
 
 def host_count_per_listing_amount_plot(df):
-    host_count_per_listing_amount_df = get_host_count_per_listing_amount_df(df)
+    host_count_per_listing_amount_df = transform.get_host_count_per_listing_amount_df(df)
 
     plt.bar(host_count_per_listing_amount_df.listing_count, host_count_per_listing_amount_df.host_count)
     plt.yscale('log')
@@ -40,7 +44,7 @@ def host_count_per_listing_amount_plot(df):
     saving_figure(plt, filename)
 
 def bedroom_count_per_price_plot(df):
-    bedroom_count_per_price_df = drop_price_na(df)
+    bedroom_count_per_price_df = transform.drop_price_na(df)
 
     plt.scatter(
         bedroom_count_per_price_df.price,
@@ -55,8 +59,8 @@ def bedroom_count_per_price_plot(df):
     saving_figure(plt, filename)
 
 def price_plot(df):
-    df = drop_price_na(df)
-    df = get_price_range(df)
+    df = transform.drop_price_na(df)
+    df = transform.get_price_range(df)
 
     plt.xticks(rotation=45)
     plt.subplots_adjust(bottom=0.2)
@@ -73,8 +77,8 @@ def calculate_percentage(row, df):
     return (range_count / total_count) * 100
 
 def price_per_neigborhood_plot(df):
-    df = drop_price_na(df)
-    df = get_price_range(df)
+    df = transform.drop_price_na(df)
+    df = transform.get_price_range(df)
 
     grouped = df.groupby(['neighborhood_name', 'price_range'], observed=True).size().unstack(fill_value=0)
     percentage_df = grouped.div(grouped.sum(axis=1), axis=0) * 100
