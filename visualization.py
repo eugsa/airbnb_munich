@@ -92,11 +92,13 @@ def price_per_neigborhood_plot(df):
     grouped = df.groupby(['neighborhood_name', 'price_range'], observed=True)
     grouped = grouped.size().unstack(fill_value=0)
     percentage_df = grouped.div(grouped.sum(axis=1), axis=0) * 100
-    percentage_df.plot(kind='barh', stacked=True)
+    percentage_df.plot(kind='barh', stacked=True, figsize=(13,6))    
+
     plt.title('Price per neighborhood plot')
     plt.xlabel('Percentage of prices')
     plt.ylabel('Neighborhoods')
-    plt.subplots_adjust(left=0.4)
+    plt.subplots_adjust(left=0.35, right=0.85)
+    plt.legend(bbox_to_anchor=(1.2, 1), loc='upper right', borderaxespad=0)
 
     filename = inspect.stack()[0][3]
     saving_figure(plt, filename)
